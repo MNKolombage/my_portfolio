@@ -87,7 +87,7 @@ export default function LandingPage() {
               height={224}
               priority
               className="object-cover transform hover:scale-110 transition duration-500"
-              style={{ width: "100%", height: "100%" }} // <-- This line fixes the warning
+              style={{ width: "100%", height: "100%" }} 
             />
             <motion.div
               animate={{
