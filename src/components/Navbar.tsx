@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
@@ -14,6 +14,26 @@ const navLinks = [
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [active, setActive] = useState("Home");
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY + 120; // Offset for sticky navbar
+      let current = "Home";
+      for (const link of navLinks) {
+        const section = document.querySelector(link.href);
+        if (section && section instanceof HTMLElement) {
+          if (scrollY >= section.offsetTop) {
+            current = link.label;
+          }
+        }
+      }
+      setActive(current);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <motion.nav
@@ -39,15 +59,23 @@ export default function Navbar() {
           <ul className="hidden md:flex gap-8 text-gray-300 font-medium">
             {navLinks.map((item) => (
               <motion.li
-                whileHover={{
-                  scale: 1.1,
-                  color: "#818cf8",
-                }}
+                whileHover={{ scale: 1.1 }}
                 key={item.label}
-                className="cursor-pointer relative group"
+                className="cursor-pointer relative group transition-colors"
               >
-                <a href={item.href}>{item.label}</a>
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-indigo-400 transition-all group-hover:w-full" />
+                <a
+                  href={item.href}
+                  className={`transition-colors ${
+                    active === item.label ? "text-indigo-400" : "text-gray-300"
+                  }`}
+                >
+                  {item.label}
+                </a>
+                <span
+                  className={`absolute -bottom-1 left-0 h-0.5 bg-indigo-400 transition-all ${
+                    active === item.label ? "w-full" : "w-0 group-hover:w-full"
+                  }`}
+                />
               </motion.li>
             ))}
           </ul>
@@ -73,7 +101,9 @@ export default function Navbar() {
               {navLinks.map((item) => (
                 <li
                   key={item.label}
-                  className="text-lg text-gray-200 font-semibold cursor-pointer"
+                  className={`text-lg font-semibold cursor-pointer transition-colors ${
+                    active === item.label ? "text-indigo-400" : "text-gray-200"
+                  }`}
                   onClick={() => setOpen(false)}
                 >
                   <a href={item.href}>{item.label}</a>
