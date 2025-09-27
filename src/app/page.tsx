@@ -19,46 +19,18 @@ import {
 } from "lucide-react";
 import Projects from "../components/Projects";
 import Skills from "../components/Skills";
+import Navbar from "../components/Navbar";
+import Contact from "../components/Contact";
 
 export default function LandingPage() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-[#0a0a23] via-[#1a1a35] to-[#0a0a23] text-white">
-      {/* Navbar */}
-      <motion.nav
-        initial={{ y: -50, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.7 }}
-        className="sticky top-0 z-50 backdrop-blur-md bg-[#0a0a23]/70 border-b border-indigo-500/20"
-      >
-        <div className="max-w-[1440px] mx-auto px-6 py-4">
-          {" "}
-          <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
-              Maleesha.dev
-            </h1>
-            <ul className="hidden md:flex gap-8 text-gray-300 font-medium">
-              {["Home", "About", "Skills", "Projects", "Contact"].map(
-                (item) => (
-                  <motion.li
-                    whileHover={{
-                      scale: 1.1,
-                      color: "#818cf8",
-                    }}
-                    key={item}
-                    className="cursor-pointer relative group"
-                  >
-                    {item}
-                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-indigo-400 transition-all group-hover:w-full" />
-                  </motion.li>
-                )
-              )}
-            </ul>
-          </div>
-        </div>
-      </motion.nav>
-
+      <Navbar />
       {/* Hero Section */}
-      <section className="relative min-h-screen flex flex-col items-center justify-center text-center px-6 max-w-[1440px] mx-auto">
+      <section
+        id="home"
+        className="relative min-h-screen flex flex-col items-center justify-center text-center px-6 max-w-[1440px] mx-auto"
+      >
         {" "}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-indigo-500/20 rounded-full blur-[120px] pointer-events-none" />{" "}
@@ -106,7 +78,7 @@ export default function LandingPage() {
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ duration: 0.6 }}
-            className="relative rounded-full overflow-hidden border-4 border-indigo-500 w-56 h-56 shadow-lg shadow-indigo-500/30" /* Increased size */
+            className="relative rounded-full overflow-hidden w-56 h-56 shadow-lg shadow-indigo-500/30"
           >
             <Image
               src="/profile.jpeg"
@@ -115,6 +87,7 @@ export default function LandingPage() {
               height={224}
               priority
               className="object-cover transform hover:scale-110 transition duration-500"
+              style={{ width: "100%", height: "100%" }} // <-- This line fixes the warning
             />
             <motion.div
               animate={{
@@ -137,7 +110,7 @@ export default function LandingPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.8 }}
-          className="mt-8 text-5xl md:text-6xl font-bold" 
+          className="mt-8 text-5xl md:text-6xl font-bold"
         >
           Hello! I&apos;m{" "}
           <span className="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
@@ -148,9 +121,9 @@ export default function LandingPage() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
-          className="mt-6 text-2xl text-gray-300 max-w-3xl" 
+          className="mt-6 text-2xl text-gray-300 max-w-3xl"
         >
-          IT Undergraduate | Full Stack Developer | UI/UX Designer
+          IT Undergraduate | Full Stack Developer
         </motion.p>
         {/* Buttons */}
         <div className="mt-12 flex gap-6 flex-wrap justify-center">
@@ -184,6 +157,7 @@ export default function LandingPage() {
 
       {/* About Section */}
       <motion.section
+        id="about"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7 }}
@@ -224,10 +198,19 @@ export default function LandingPage() {
       </motion.section>
 
       {/* Skills Section */}
-      <Skills />
+      <section id="skills" className="scroll-mt-20">
+        <Skills />
+      </section>
 
       {/* Projects Section */}
-      <Projects />
+      <section id="projects" className="scroll-mt-20">
+        <Projects />
+      </section>
+
+      {/* Contact Section */}
+      <section id="contact" className="scroll-mt-20">
+        <Contact />
+      </section>
 
       {/* Footer */}
       <footer className="w-full mt-20 bg-gray-900/50 backdrop-blur-sm border-t border-gray-800">
